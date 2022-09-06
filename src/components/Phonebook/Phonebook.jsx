@@ -5,11 +5,8 @@ import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
 import { ContactList } from './ContactList/ContactList';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
-import {
-  addContact,
-  removeContact,
-} from '../../redux/contacts/contacts-actions';
-import { setFilter } from '../../redux/filter/filter-actions';
+import { addContact, removeContact } from '../../redux/contacts/contacts-slice';
+import { setFilter } from '../../redux/filter/filter-slice';
 
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
@@ -20,7 +17,6 @@ export const Phonebook = () => {
 
   // submit and add to local storage
   const handleSubmit = newContact => {
-    // console.log(newContact);
     const { name, number } = newContact;
 
     const contact = contacts?.find(
