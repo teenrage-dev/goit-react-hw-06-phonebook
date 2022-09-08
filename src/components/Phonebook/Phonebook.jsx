@@ -5,21 +5,22 @@ import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
 import { ContactList } from './ContactList/ContactList';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
-import { addContact, removeContact } from '../../redux/contacts/contacts-slice';
+import { addContact, removeContact } from '../../redux/items/items-slice';
 import { setFilter } from '../../redux/filter/filter-slice';
 
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 export const Phonebook = () => {
-  const contacts = useSelector(store => store.contacts);
-  const filter = useSelector(store => store.filter);
+  const items = useSelector(({ contacts }) => contacts.items);
+  const filter = useSelector(({ contacts }) => contacts.filter);
   const dispatch = useDispatch();
+  console.log(items, filter);
 
   // submit and add to local storage
   const handleSubmit = newContact => {
     const { name, number } = newContact;
 
-    const contact = contacts?.find(
+    const contact = items.find(
       contact => contact.name.toLowerCase() === name.toLowerCase()
     );
 
@@ -29,7 +30,7 @@ export const Phonebook = () => {
     }
     const action = addContact(newContact);
     dispatch(action);
-    const newContacts = [...contacts, { name, number, id: nanoid() }];
+    const newContacts = [...items, { name, number, id: nanoid() }];
     return newContacts;
   };
 
@@ -43,9 +44,9 @@ export const Phonebook = () => {
   // get filtered contacts
   const getFIlteredContacts = () => {
     if (!filter) {
-      return contacts;
+      return items;
     }
-    return contacts.filter(contact =>
+    return items.filter(contact =>
       contact.name.toLowerCase().includes(filter.toLowerCase())
     );
   };

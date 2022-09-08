@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import css from '../ContactList/ContactList.module.css';
 
 export const ContactList = ({ renderList, onDeleteContact }) => {
-  // console.log(renderList);
   return (
     <>
       <ul className={css.phonebook__list}>
